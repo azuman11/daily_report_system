@@ -27,6 +27,17 @@ import javax.persistence.Table;
             name = "getReportsCount",
             query = "SELECT COUNT(r) FROM Report AS r"
             ),
+    //トップページに自分の日報の一覧表示用 WHERE r.employee = :employeeで指定。
+    //自分の レポートを全て取り出す
+    @NamedQuery(
+            name = "getMyAllReports",
+            query = "SELECT r FROM Report AS r WHERE r.employee = :employee ORDER BY r.id DESC"
+            ),
+    //自分の レポートの総数カウント
+    @NamedQuery(
+            name = "getMyReportsCount",
+            query = "SELECT COUNT(r) FROM Report AS r WHERE r.employee = :employee"
+            )
 })
 @Entity
 public class Report {
