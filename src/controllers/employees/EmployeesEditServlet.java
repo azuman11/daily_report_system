@@ -36,6 +36,7 @@ public class EmployeesEditServlet extends HttpServlet {
         EntityManager em = DBUtil.createEntityManager();
 
         //中身を入れる。
+        //パラメーターから得たIDの人の情報をeに詰める。
         Employee e = em.find(Employee.class, Integer.parseInt(request.getParameter("id")));
 
         em.close();

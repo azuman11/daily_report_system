@@ -13,7 +13,7 @@ import javax.servlet.ServletContextListener;
 import javax.servlet.annotation.WebListener;
 
 
-//ソルト文字列を登録。
+//ソルト文字列を登録。コピペ
 /**
  * Application Lifecycle Listener implementation class PropertiesListener
  *

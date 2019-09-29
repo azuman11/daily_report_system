@@ -14,11 +14,13 @@ public class EmployeeValidator {
         List<String> errors = new ArrayList<String>();
 
         //code_duplicate_check_flagで社員番号入力確認が必要な時だけを判断している。
+        // code_duplicate_check_flagがtureの際、getしたcodeについてerror
         String code_error = _validateCode(e.getCode(), code_duplicate_check_flag);
         if(!code_error.equals("")) {
             errors.add(code_error);
         }
 
+        //nameはいつでも確認。
         String name_error = _validateName(e.getName());
         if(!name_error.equals("")) {
             errors.add(name_error);
@@ -43,6 +45,8 @@ public class EmployeeValidator {
         // 既にある社員番号との重複チェック
         if(code_duplicate_check_flag) {
             EntityManager em = DBUtil.createEntityManager();
+            //既知のIDか確認
+            //long=長い整数
             long employees_count = (long)em.createNamedQuery("checkRegisteredCode", Long.class)
                                            .setParameter("code", code)
                                              .getSingleResult();

@@ -49,8 +49,8 @@ public class EmployeesCreateServlet extends HttpServlet {
             e.setPassword(
                     //saltメソッドを使用
                     EncryptUtil.getPasswordEncrypt(
-                            request.getParameter("password"),
-                            (String)this.getServletContext().getAttribute("salt")
+                            request.getParameter("password"),//引数1つ目
+                            (String)this.getServletContext().getAttribute("salt")//引数2つ目としてメソッド処理。
                             )
                     );
             e.setAdmin_flag(Integer.parseInt(request.getParameter("admin_flag")));

@@ -43,12 +43,12 @@ public class EmployeesUpdateServlet extends HttpServlet {
 
             Employee e = em.find(Employee.class, (Integer)(request.getSession().getAttribute("employee_id")));
 
-            // 後で理解
-            // 現在の値と異なる社員番号が入力されていたら Boolean真偽
-            // 重複チェックを行う指定をする
+            //一度エラーと仮定し、
             Boolean code_duplicate_check = true;
+            //codeが一緒ならば、エラー認定解除。
             if(e.getCode().equals(request.getParameter("code"))) {
                 code_duplicate_check = false;
+            //一緒でなければ、エラーのまま。
             } else {
                 e.setCode(request.getParameter("code"));
             }
@@ -79,7 +79,7 @@ public class EmployeesUpdateServlet extends HttpServlet {
             if(errors.size() > 0) {
                 em.close();
 
-                // フォームに初期値を設定、さらにエラーメッセージを送る
+                // フォームに変更後の中身は残しつつ、さらにエラーメッセージ付きで編集画面に戻す。
                 request.setAttribute("_token", request.getSession().getId());
                 request.setAttribute("employee", e);
                 request.setAttribute("errors", errors);

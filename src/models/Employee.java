@@ -11,7 +11,9 @@ import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 
+//DTO
 @Table(name = "employees")
+//クエリ=問い合わせ あらかじめ名前のついているクエリ=namedquery
 @NamedQueries({
     @NamedQuery(
             //すべての従業員情報
@@ -52,6 +54,7 @@ public class Employee {
     @Column(name = "password", length = 64, nullable = false)
     private String password;
 
+    //管理者1か否か0
     @Column(name = "admin_flag", nullable = false)
     private Integer admin_flag;
 
@@ -61,6 +64,7 @@ public class Employee {
     @Column(name = "updated_at", nullable = false)
     private Timestamp updated_at;
 
+    //在籍者0か否か1
     @Column(name = "delete_flag", nullable = false)
     private Integer delete_flag;
 

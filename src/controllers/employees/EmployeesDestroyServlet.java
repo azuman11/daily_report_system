@@ -45,9 +45,9 @@ public class EmployeesDestroyServlet extends HttpServlet {
 
             //DBの方を更新
             em.getTransaction().begin();
-            //データ削除
-            em.remove(e);
+            //データ削除 em.remove(e); はしない。
             em.getTransaction().commit();
+            em.close();
             //リダイレクト時に消えてしまうので、フラッシュメッセージをセッションスコープに保存し、index.jspを呼出時にセッションスコープ表示
             request.getSession().setAttribute("flush", "削除が完了しました。");
 
