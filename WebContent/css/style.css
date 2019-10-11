@@ -173,3 +173,24 @@ pre {
 h3 {
     font-size: larger;
 }
+
+table#attendance_list th {
+    font-weight: bold;
+    padding: 10px 2%;
+}
+
+table#attendance_list .attendance_date {
+    width: 20%;
+}
+table#attendance_list .going_time {
+    width: 20%;
+}
+
+table#attendance_list .leave_time {
+    width: 20%;
+}
+
+#attendance_date {
+    color: #721c24;
+
+}
