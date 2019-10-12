@@ -159,7 +159,10 @@ table#report_list .report_date {
 }
 
 table#report_list .report_title {
-    width: 37%;
+    width: 20%;
+}
+table#report_list .report_approval {
+    width: 12%;
 }
 
 table#report_list .report_action {
@@ -193,4 +196,24 @@ table#attendance_list .leave_time {
 #attendance_date {
     color: #721c24;
 
+}
+
+table#approvalReport_list .report_name {
+    width: 20%;
+    padding: 10px 2%;
+}
+table#approvalReport_list .report_date {
+    width: 20%;
+}
+
+table#approvalReport_list .report_title {
+    width: 25%;
+}
+
+table#approvalReport_list .report_approval {
+    width: 12%;
+}
+
+table#approvalReport_list .report_action {
+    width: 13%;
 }

@@ -54,7 +54,7 @@ public class Employee {
     @Column(name = "password", length = 64, nullable = false)
     private String password;
 
-    //管理者1か否か0
+    //管理者1か否か0→上長2,3
     @Column(name = "admin_flag", nullable = false)
     private Integer admin_flag;
 

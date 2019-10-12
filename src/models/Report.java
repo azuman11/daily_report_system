@@ -27,6 +27,14 @@ import javax.persistence.Table;
             name = "getReportsCount",
             query = "SELECT COUNT(r) FROM Report AS r"
             ),
+    @NamedQuery(
+            name = "getNotApprovalReports",
+            query = "SELECT r FROM Report AS r WHERE r.approval = 0 ORDER BY r.id DESC"
+            ),
+    @NamedQuery(
+            name = "getNotApprovalCount",
+            query = "SELECT COUNT(r) FROM Report AS r WHERE r.approval = 0"
+            ),
     //トップページに自分の日報の一覧表示用 WHERE r.employee = :employeeで指定。
     //自分の レポートを全て取り出す
     @NamedQuery(
@@ -58,6 +66,9 @@ public class Report {
     @Column(name = "title", length = 255, nullable = false)
     private String title;
 
+    @Column(name = "approval", nullable = true)
+    private Integer approval;
+
     // @Lob 改行も改行として保存
     @Lob
     @Column(name = "content", nullable = false)
@@ -68,6 +79,7 @@ public class Report {
 
     @Column(name = "updated_at", nullable = false)
     private Timestamp updated_at;
+
 
     public Integer getId() {
         return id;
@@ -124,4 +136,12 @@ public class Report {
     public void setUpdated_at(Timestamp updated_at) {
         this.updated_at = updated_at;
     }
+    public Integer getApproval() {
+        return approval;
+    }
+
+    public void setApproval( Integer approval) {
+        this.approval = approval;
+    }
+
 }
