@@ -80,6 +80,13 @@ public class Report {
     @Column(name = "updated_at", nullable = false)
     private Timestamp updated_at;
 
+    @ManyToOne
+    @JoinColumn(name = "clients_id", nullable = true)
+    private Client clients_id;
+
+    @Lob
+    @Column(name = "clients_content", nullable = true)
+    private String clients_content;
 
     public Integer getId() {
         return id;
@@ -142,6 +149,22 @@ public class Report {
 
     public void setApproval( Integer approval) {
         this.approval = approval;
+    }
+
+    public Client getClients_id() {
+        return clients_id;
+    }
+
+    public void setClients_id(Client clients_id) {
+        this.clients_id = clients_id;
+    }
+
+    public String getClients_content() {
+        return clients_content;
+    }
+
+    public void setClients_content(String clients_content) {
+        this.clients_content = clients_content;
     }
 
 }

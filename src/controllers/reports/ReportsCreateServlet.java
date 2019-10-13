@@ -13,6 +13,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import models.Client;
 import models.Employee;
 import models.Report;
 import models.validators.ReportValidator;
@@ -41,6 +42,10 @@ public class ReportsCreateServlet extends HttpServlet {
         if(_token != null && _token.equals(request.getSession().getId())) {
             EntityManager em = DBUtil.createEntityManager();
 
+            EntityManager ema = DBUtil.createEntityManager();
+            List<Client> clients = ema.createNamedQuery("getAllClients", Client.class)
+                    .getResultList();
+
             Report r = new Report();
 
             //中身を詰める
@@ -58,6 +63,7 @@ public class ReportsCreateServlet extends HttpServlet {
 
             r.setTitle(request.getParameter("title"));
             r.setContent(request.getParameter("content"));
+            r.setApproval(0);
 
             Timestamp currentTime = new Timestamp(System.currentTimeMillis());
             r.setCreated_at(currentTime);
@@ -69,6 +75,7 @@ public class ReportsCreateServlet extends HttpServlet {
 
                 request.setAttribute("_token", request.getSession().getId());
                 request.setAttribute("report", r);
+                request.setAttribute("clients", clients);
                 request.setAttribute("errors", errors);
 
                 RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/views/reports/new.jsp");

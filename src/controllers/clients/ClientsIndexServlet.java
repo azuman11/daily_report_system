@@ -1,4 +1,4 @@
-package controllers.reports;
+package controllers.clients;
 
 import java.io.IOException;
 import java.util.List;
@@ -11,21 +11,20 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import models.Report;
+import models.Client;
 import utils.DBUtil;
 
-//EmployeesIndexServletとほぼ一緒
 /**
- * Servlet implementation class ReportsIndexServlet
+ * Servlet implementation class ClientsIndexServlet
  */
-@WebServlet("/reports/index")
-public class ReportsIndexServlet extends HttpServlet {
+@WebServlet("/clients/index")
+public class ClientsIndexServlet extends HttpServlet {
     private static final long serialVersionUID = 1L;
 
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public ReportsIndexServlet() {
+    public ClientsIndexServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -36,28 +35,25 @@ public class ReportsIndexServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         EntityManager em = DBUtil.createEntityManager();
 
-
-        int page;
+        int page = 1;
         try{
             page = Integer.parseInt(request.getParameter("page"));
-        } catch(Exception e) {
-            page = 1;
-        }
-        List<Report> reports = em.createNamedQuery("getAllReports", Report.class)
-                                  .setFirstResult(15 * (page - 1))
-                                  .setMaxResults(15)
-                                  // 結果をgetResultList()メソッドで、リスト形式で取得
-                                  .getResultList();
+        } catch(NumberFormatException e) { }
+        List<Client> clients = em.createNamedQuery("getAllClients", Client.class)
+                                     .setFirstResult(15 * (page - 1))
+                                     .setMaxResults(15)
+                                     // 結果をgetResultList()メソッドで、リスト形式で取得
+                                     .getResultList();
 
         // 全件数を取得
-        long reports_count = (long)em.createNamedQuery("getReportsCount", Long.class)
+        long clients_count = (long)em.createNamedQuery("getClientsCount", Long.class)
                                        .getSingleResult();
 
         em.close();
 
         // リクエストスコープ(controller)にセット
-        request.setAttribute("reports", reports);
-        request.setAttribute("reports_count", reports_count);
+        request.setAttribute("clients", clients);
+        request.setAttribute("clients_count", clients_count);
         request.setAttribute("page", page);
 
         //セッションにフラッシュがあったら、フラをセッションからリクエストに移動し、セッションからは削除。
@@ -66,7 +62,7 @@ public class ReportsIndexServlet extends HttpServlet {
             request.getSession().removeAttribute("flush");
         }
 
-        RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/views/reports/index.jsp");
+        RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/views/clients/index.jsp");
         rd.forward(request, response);
     }
 }
