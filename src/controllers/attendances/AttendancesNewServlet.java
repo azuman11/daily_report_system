@@ -36,16 +36,10 @@ public class AttendancesNewServlet extends HttpServlet {
 
 
         Attendance a = new Attendance();
-        // 新規登録の際にすでに今日の日付を入れておく。urrentTimeMillis
         a.setAttendance_date(new Date(System.currentTimeMillis()));
         a.setGoing_time(new Timestamp(System.currentTimeMillis()));
         request.setAttribute("attendance", a);
 
-        /*
-        EntityManager em = DBUtil.createEntityManager();
-
-        a = (Attendance)em.createNamedQuery("getMyTodayAttendances", Attendance.class);
-        */
 
         RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/views/attendances/new.jsp");
         rd.forward(request, response);

@@ -15,6 +15,6 @@
             </c:otherwise>
         </c:choose>
 
-        <p><a href="<c:url value='/approvals/index' />">一覧に戻る</a></p>
+        <p><a href="<c:url value='/approvals/index' />">未承認日報一覧に戻る</a></p>
     </c:param>
 </c:import>

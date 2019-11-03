@@ -47,7 +47,7 @@ public class ClientsCreateServlet extends HttpServlet {
 
             c.setContact_address(request.getParameter("contact_address"));
 
-         // バリデーション pwと社員番号のチェックも
+            // バリデーション pwと社員番号のチェックも
             List<String> errors = ClientValidator.validate(c);
             if(errors.size() > 0) {
                 em.close();

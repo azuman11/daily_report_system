@@ -57,7 +57,7 @@ public class ApprovalsUpdateServlet extends HttpServlet {
                 em.getTransaction().begin();
                 em.getTransaction().commit();
                 em.close();
-                request.getSession().setAttribute("flush", "更新が完了しました。");
+                request.getSession().setAttribute("flush", "承認が完了しました。");
 
                 request.getSession().removeAttribute("report_id");
 

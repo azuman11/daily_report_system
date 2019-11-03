@@ -34,10 +34,11 @@
 <label for="client">本日の取引相手</label><br />
 <select name="client">
 <c:forEach var="clients" items="${clients}">
-<option  value="${clients.id}"<c:if test="${report.clients_id == clients.id}"> selected</c:if>>${clients.name}</option>
+<option  value="${clients.id}"<c:if test="${report.clients_id == clients}">selected</c:if>>${clients.name}</option>
 </c:forEach>
 </select>
 <br /><br />
+
 
 
 <label for="clients_content">商談内容</label><br />

@@ -5,7 +5,7 @@
     <c:param name="content">
         <c:choose>
             <c:when test="${report != null}">
-                <h2>日報　詳細ページ</h2>
+                <h2>未承認日報　確認ページ</h2>
 
                 <table>
                     <tbody>
@@ -36,12 +36,23 @@
                                 <fmt:formatDate value="${report.updated_at}" pattern="yyyy-MM-dd HH:mm:ss" />
                             </td>
                         </tr>
+                        <tr>
+                            <th>顧客名</th>
+                            <td><c:out value="${report.clients_id.name}" /></td>
+                        </tr>
+                        <tr>
+                        <%--本来は中身の改行を、改行記号を <br />に変換しなくてはいけないが <pre>を使いそのままに。--%>
+                            <th>商談内容</th>
+                            <td>
+                                <pre><c:out value="${report.clients_content}" /></pre>
+                            </td>
+                        </tr>
                     </tbody>
                 </table>
 
                 <%-- ログイン者が作成者の場合のみ表示。 IDが同じかで判断 --%>
 
-                <p><a href="<c:url value='/approvals/edit?id=${report.id}' />">この日報を編集する</a></p>
+                <p><a href="<c:url value='/approvals/edit?id=${report.id}' />">この日報を承認する</a></p>
 
             </c:when>
             <c:otherwise>
@@ -49,6 +60,6 @@
             </c:otherwise>
         </c:choose>
 
-        <p><a href="<c:url value='/approvals/index' />">一覧に戻る</a></p>
+        <p><a href="<c:url value='/approvals/index' />">未承認日報一覧に戻る</a></p>
     </c:param>
 </c:import>

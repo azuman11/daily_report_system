@@ -36,6 +36,17 @@
                                 <fmt:formatDate value="${report.updated_at}" pattern="yyyy-MM-dd HH:mm:ss" />
                             </td>
                         </tr>
+                        <tr>
+                            <th>顧客名</th>
+                            <td><c:out value="${report.clients_id.name}" /></td>
+                        </tr>
+                        <tr>
+                        <%--本来は中身の改行を、改行記号を <br />に変換しなくてはいけないが <pre>を使いそのままに。--%>
+                            <th>商談内容</th>
+                            <td>
+                                <pre><c:out value="${report.clients_content}" /></pre>
+                            </td>
+                        </tr>
                     </tbody>
                 </table>
 
@@ -43,12 +54,27 @@
                 <c:if test="${sessionScope.login_employee.id == report.employee.id}">
                     <p><a href="<c:url value='/reports/edit?id=${report.id}' />">この日報を編集する</a></p>
                 </c:if>
+
+                <br />
+                <c:if test="${good != null}">
+                    <form method="POST" action="<c:url value='/goods/destroy?id=${report.id}' />">
+                        <input type="hidden" name="_token" value="${_token}" />
+                        <button name="good" type="submit">いいね解除</button>
+                    </form>
+                </c:if>
+                <c:if test="${good == null}">
+                    <form method="POST" action="<c:url value='/goods/create?id=${report.id}' />">
+                        <input type="hidden" name="_token" value="${_token}" />
+                        <button name="good" type="submit">いいね</button>
+                    </form>
+                </c:if>
+
             </c:when>
             <c:otherwise>
                 <h2>お探しのデータは見つかりませんでした。</h2>
             </c:otherwise>
         </c:choose>
 
-        <p><a href="<c:url value='/reports/index' />">一覧に戻る</a></p>
+        <p><a href="<c:url value='/reports/index' />">日報一覧に戻る</a></p>
     </c:param>
 </c:import>

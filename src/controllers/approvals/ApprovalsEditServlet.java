@@ -39,7 +39,7 @@ public class ApprovalsEditServlet extends HttpServlet {
 
         em.close();
 
-        //login_employeeのIDとみているレポートの作成者のIDの確認。
+        //login_employeeの権限確認
         //一致する場合のみにreportに中身が詰まる。そしてedit.jspに送られる。
         Employee login_employee = (Employee)request.getSession().getAttribute("login_employee");
         if(login_employee.getAdmin_flag() == 2 || login_employee.getAdmin_flag() == 3) {

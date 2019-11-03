@@ -41,6 +41,21 @@ import javax.persistence.Table;
             name = "getMyAllReports",
             query = "SELECT r FROM Report AS r WHERE r.employee = :employee ORDER BY r.id DESC"
             ),
+    //フォロワーのレポートを全て取り出す
+    @NamedQuery(
+            name = "getFollowAllReports",
+            query = "SELECT r FROM Report AS r WHERE r.employee = :employee ORDER BY r.id DESC"
+            ),
+    //id一致のレポート取得
+    @NamedQuery(
+            name = "getIdReports",
+            query = "SELECT r FROM Report AS r WHERE r.id = :id "
+            ),
+    //フォロワーの レポートの総数カウント
+    @NamedQuery(
+            name = "getFollowsReportsCount",
+            query = "SELECT COUNT(r) FROM Report AS r WHERE r.employee = :employee"
+            ),
     //自分の レポートの総数カウント
     @NamedQuery(
             name = "getMyReportsCount",

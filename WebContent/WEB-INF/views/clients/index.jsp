@@ -7,7 +7,7 @@
                 <c:out value="${flush}"></c:out>
             </div>
         </c:if>
-        <h2>従業員　一覧</h2>
+        <h2>顧客　一覧</h2>
         <table id="client_list">
             <tbody>
                 <tr>
@@ -39,7 +39,7 @@
                 </c:choose>
             </c:forEach>
         </div>
-        <p><a href="<c:url value='/clients/new' />">新規顧客様の登録</a></p>
+        <p><a href="<c:url value='/clients/new' />">新規顧客の登録</a></p>
 
     </c:param>
 </c:import>

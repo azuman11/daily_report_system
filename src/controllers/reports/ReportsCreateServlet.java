@@ -63,7 +63,13 @@ public class ReportsCreateServlet extends HttpServlet {
 
             r.setTitle(request.getParameter("title"));
             r.setContent(request.getParameter("content"));
+
             r.setApproval(0);
+
+            Client c = em.find(Client.class, Integer.parseInt(request.getParameter("client")));
+
+            r.setClients_id(c);
+            r.setClients_content(request.getParameter("clients_content"));
 
             Timestamp currentTime = new Timestamp(System.currentTimeMillis());
             r.setCreated_at(currentTime);

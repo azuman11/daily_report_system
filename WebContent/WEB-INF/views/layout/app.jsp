@@ -27,8 +27,11 @@
                             <a href="<c:url value='/approvals/index' />">日報承認</a>&nbsp;
                         </c:if>
 
-                        <a href="<c:url value='/reports/index' />">日報管理</a>&nbsp;
                         <a href="<c:url value='/clients/index' />">顧客管理</a>&nbsp;
+                        <a href="<c:url value='/reports/index' />">日報管理</a>&nbsp;
+                        <a href="<c:url value='/follows/index' />">フォロー日報</a>&nbsp;
+                        <a href="<c:url value='/goods/index' />">いいね日報</a>&nbsp;
+
                         <a href="<c:url value='/attendances/index' />">出退勤管理</a>&nbsp;
                     </c:if>
                 </div>

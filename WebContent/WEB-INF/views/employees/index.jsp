@@ -14,6 +14,7 @@
                 <tr>
                     <th>社員番号</th>
                     <th>氏名</th>
+                    <th>権限・役職</th>
                     <th>操作</th>
                 </tr>
                 <%-- 此処は後で理解していく事。 --%>
@@ -21,6 +22,14 @@
                     <tr class="row${status.count % 2}">
                         <td><c:out value="${employee.code}" /></td>
                         <td><c:out value="${employee.name}" /></td>
+                        <td>
+                                <c:choose>
+                                    <c:when test="${employee.admin_flag == 1}">管理者</c:when>
+                                    <c:when test="${employee.admin_flag == 2}">課長</c:when>
+                                    <c:when test="${employee.admin_flag == 3}">部長</c:when>
+                                    <c:otherwise>一般</c:otherwise>
+                                </c:choose>
+                            </td>
                         <td>
                             <c:choose>
                                 <c:when test="${employee.delete_flag == 1}">
@@ -31,6 +40,7 @@
                                 </c:otherwise>
                             </c:choose>
                         </td>
+
                     </tr>
                 </c:forEach>
             </tbody>

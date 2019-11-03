@@ -49,7 +49,6 @@ public class AttendancesCreateServlet extends HttpServlet {
 
             Employee employee = a.getEmployee();
 
-            //此処が追加されている
             // 今日の日付をDate型に変換。
             Date attendance_date = new Date(System.currentTimeMillis());
 
@@ -67,8 +66,6 @@ public class AttendancesCreateServlet extends HttpServlet {
                     aaa.setLeave_time(leave_time);
 
 
-
-
                     List<String> errors = AttendanceValidator.validate(a);
                     if(errors.size() > 0) {
                         em.close();
@@ -84,7 +81,7 @@ public class AttendancesCreateServlet extends HttpServlet {
                         em.persist(aaa);
                         em.getTransaction().commit();
                         em.close();
-                        request.getSession().setAttribute("flush", "登録が完了しました。");
+                        request.getSession().setAttribute("flush", "退勤登録が完了しました。");
 
                         response.sendRedirect(request.getContextPath() + "/attendances/index");
                     }
@@ -92,9 +89,6 @@ public class AttendancesCreateServlet extends HttpServlet {
             } catch(NoResultException e) {
                 Timestamp going_time = new Timestamp(System.currentTimeMillis());
                 a.setGoing_time(going_time);
-                //a.setEmployee(employee);
-
-
 
                 List<String> errors = AttendanceValidator.validate(a);
                 if(errors.size() > 0) {
@@ -111,14 +105,12 @@ public class AttendancesCreateServlet extends HttpServlet {
                     em.persist(a);
                     em.getTransaction().commit();
                     em.close();
-                    request.getSession().setAttribute("flush", "登録が完了しました。");
+                    request.getSession().setAttribute("flush", "出勤登録が完了しました。");
 
                     response.sendRedirect(request.getContextPath() + "/attendances/index");
                 }
 
-
             } finally {
-
             }
 
         }

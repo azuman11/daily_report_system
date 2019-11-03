@@ -1,7 +1,9 @@
-package controllers.attendances;
+package controllers.goods;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.ListIterator;
 
 import javax.persistence.EntityManager;
 import javax.servlet.RequestDispatcher;
@@ -11,22 +13,22 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import models.Attendance;
 import models.Employee;
+import models.Good;
+import models.Report;
 import utils.DBUtil;
 
-//EmployeesIndexServletとほぼ一緒
 /**
- * Servlet implementation class AttendancesIndexServlet
+ * Servlet implementation class GoodsIndexServlet
  */
-@WebServlet("/attendances/index")
-public class AttendancesIndexServlet extends HttpServlet {
+@WebServlet("/goods/index")
+public class GoodsIndexServlet extends HttpServlet {
     private static final long serialVersionUID = 1L;
 
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public AttendancesIndexServlet() {
+    public GoodsIndexServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -37,7 +39,6 @@ public class AttendancesIndexServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         EntityManager em = DBUtil.createEntityManager();
 
-        Employee login_employee = (Employee)request.getSession().getAttribute("login_employee");
 
         int page;
         try{
@@ -46,22 +47,39 @@ public class AttendancesIndexServlet extends HttpServlet {
             page = 1;
         }
 
-        List<Attendance> attendances = em.createNamedQuery("getMyAllAttendances", Attendance.class)
-                                  .setParameter("employee", login_employee)
-                                  .setFirstResult(15 * (page - 1))
-                                  .setMaxResults(15)
-                                  .getResultList();
+        Good g = new Good();
+        g.setEmployee((Employee)request.getSession().getAttribute("login_employee"));
+        Employee employee = g.getEmployee();
 
-        long attendances_count = (long)em.createNamedQuery("getMyAttendancesCount", Long.class)
-                                     .setParameter("employee", login_employee)
-                                     .getSingleResult();
+        List<Good> goods = em.createNamedQuery("getMyAllGoods", Good.class)
+                .setParameter("employee", employee)
+                // 結果をgetResultList()メソッドで、リスト形式で取得
+                .getResultList();
+
+        ListIterator<Good> iterator = goods.listIterator();
+        List<Report> goods_reports_all = new ArrayList<Report>();
+
+
+        while (iterator.hasNext()) {
+            Good ggg = iterator.next();
+            Integer eee = ggg.getReport_id();
+
+            Report r = em.find(Report.class, eee);
+
+            goods_reports_all.add(r);
+        }
+
+
+        Integer goods_report_count = goods_reports_all.size();
+        List<Report> goods_reports = goods_reports_all.subList(15 * (page - 1), Math.min(15 * page, goods_report_count));
+
 
         em.close();
 
-        // リクエストスコープ(controller)にセット
-        request.setAttribute("attendances", attendances);
-        request.setAttribute("attendances_count", attendances_count);
+        request.setAttribute("goods_reports", goods_reports);
         request.setAttribute("page", page);
+        request.setAttribute("goods_report_count", goods_report_count);
+
 
         //セッションにフラッシュがあったら、フラをセッションからリクエストに移動し、セッションからは削除。
         if(request.getSession().getAttribute("flush") != null) {
@@ -69,7 +87,8 @@ public class AttendancesIndexServlet extends HttpServlet {
             request.getSession().removeAttribute("flush");
         }
 
-        RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/views/attendances/index.jsp");
+
+        RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/views/goods/index.jsp");
         rd.forward(request, response);
     }
 }

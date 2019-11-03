@@ -20,6 +20,11 @@ public class ReportValidator {
             errors.add(content_error);
         }
 
+        String clients_content_error = _validateClients(r.getClients_content());
+        if(!clients_content_error.equals("")) {
+            errors.add(clients_content_error);
+        }
+
         return errors;
     }
 
@@ -38,4 +43,13 @@ public class ReportValidator {
 
         return "";
     }
+
+    private static String _validateClients(String clients_content) {
+        if(clients_content == null || clients_content.equals("")) {
+            return "商談内容を入力してください。";
+            }
+
+        return "";
+    }
+
 }

@@ -10,6 +10,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import models.Employee;
+import models.Good;
 import models.Report;
 import utils.DBUtil;
 
@@ -37,13 +39,36 @@ public class ReportsShowServlet extends HttpServlet {
         // IDで指定したレポートをrに入れる。
         Report r = em.find(Report.class, Integer.parseInt(request.getParameter("id")));
 
-        em.close();
+        Employee employee = (Employee)request.getSession().getAttribute("login_employee");
+        Integer report_id = r.getId();
 
-        request.setAttribute("report", r);
-        request.setAttribute("_token", request.getSession().getId());
+       try {
 
-        RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/views/reports/show.jsp");
-        rd.forward(request, response);
+           Good g = em.createNamedQuery("checkGoods", Good.class)
+                   .setParameter("employee", employee)
+                   .setParameter("report_id", report_id)
+                   .getSingleResult();
+
+           em.close();
+
+           request.setAttribute("good", g);
+           request.setAttribute("report", r);
+           request.setAttribute("_token", request.getSession().getId());
+
+           RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/views/reports/show.jsp");
+           rd.forward(request, response);
+
+       } catch (Exception e) {
+        // TODO: handle exception
+
+           em.close();
+
+           request.setAttribute("report", r);
+           request.setAttribute("_token", request.getSession().getId());
+
+           RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/views/reports/show.jsp");
+           rd.forward(request, response);
+       }
     }
 
 }

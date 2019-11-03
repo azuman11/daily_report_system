@@ -12,13 +12,9 @@
     </div>
 </c:if>
 
-<%-- 権限 --%>
-<label for="approval_flag">レポート承認</label><br />
-<%-- 選択式タブ --%>
-<select name="approval_flag">
-    <option value="0"<c:if test="${report.approval == 0}"> selected</c:if>>未承認</option>
-    <option value="1"<c:if test="${report.approval == 1}"> selected</c:if>>承認</option>
-</select>
+
+
+<%-- <input type="hidden" name="followee" value="${report.employee}" /> --%>
 
 <input type="hidden" name="_token" value="${_token}" />
-<button type="submit">送信</button>
+<button type="submit">フォローする</button>

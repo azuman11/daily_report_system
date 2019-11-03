@@ -13,6 +13,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import models.Client;
 import models.Report;
 import models.validators.ReportValidator;
 import utils.DBUtil;
@@ -48,6 +49,11 @@ public class ReportsUpdateServlet extends HttpServlet {
             r.setContent(request.getParameter("content"));
             //更新用なのでここは最新のものに更新される。
             r.setUpdated_at(new Timestamp(System.currentTimeMillis()));
+
+            Client c = em.find(Client.class, Integer.parseInt(request.getParameter("client")));
+
+            r.setClients_id(c);
+            r.setClients_content(request.getParameter("clients_content"));
 
             List<String> errors = ReportValidator.validate(r);
             if(errors.size() > 0) {
